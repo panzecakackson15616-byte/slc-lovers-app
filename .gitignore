@@ -1,0 +1,61 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdata
+*.xcworkspace
+xcuserdata/
+iOS/SLC-Lovers.xcodeproj
+iOS/build/
+
+# Android
+Android/.gradle/
+Android/build/
+Android/app/build/
+Android/local.properties
+Android/captures/
+Android/.idea/
+Android/*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 临时文件
+*.log
+*.tmp
+*.bak
+.cache/
+
+# 测试脚本（含 Token，不要提交）
+test-github-token.py
+
+# 加密同步数据
+*.enc
+data/

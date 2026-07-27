@@ -1,0 +1,121 @@
+name: Build iOS App
+
+# 触发条件：手动触发，或 push 到 main 分支时
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: '构建说明（可选）'
+        required: false
+        default: ''
+  push:
+    branches:
+      - main
+    paths:
+      - 'iOS/**'
+      - '.github/workflows/build-ios.yml'
+
+jobs:
+  build:
+    name: Build iOS IPA
+    runs-on: macos-14  # GitHub 提供的 macOS runner（含 Xcode 15）
+    timeout-minutes: 30
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 安装 XcodeGen
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      # 3. 生成 Xcode 工程
+      - name: Generate Xcode project
+        working-directory: iOS
+        run: xcodegen
+
+      # 4. 选择 Xcode 版本
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer || true
+
+      # 5. 显示环境信息
+      - name: Print environment
+        run: |
+          echo "Xcode path: $(xcode-select -p)"
+          xcodebuild -version || true
+          xcodegen --version || true
+
+      # 6. 编译 APP（模拟器版本，无需签名）
+      # 注：真机版本需要 Apple Developer 账号 + 证书
+      # 这里先编译成模拟器可运行的 .app，再用 simctl 打包
+      - name: Build for iOS Simulator
+        working-directory: iOS
+        run: |
+          set -e
+          # 列出可用模拟器
+          xcrun simctl list devices available | grep "iPhone" | head -3
+
+          # 编译为通用 iOS 模拟器版本
+          xcodebuild \
+            -project SLC-Lovers.xcodeproj \
+            -scheme SLC-Lovers \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath ./build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            clean build
+
+      # 7. 把 .app 打包成 .ipa（模拟器版本，用 AltStore 或直接拖进模拟器）
+      - name: Package as IPA
+        working-directory: iOS
+        run: |
+          set -e
+          # 找到编译产物
+          APP_PATH=$(find ./build -name "SLC-Lovers.app" -type d | head -1)
+          echo "Found app at: $APP_PATH"
+
+          if [ -z "$APP_PATH" ]; then
+            echo "❌ SLC-Lovers.app not found"
+            exit 1
+          fi
+
+          # 创建 Payload 目录并打包
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/
+          zip -r SLC-Lovers-simulator.ipa Payload
+
+          echo "✅ IPA created: SLC-Lovers-simulator.ipa"
+          ls -lh SLC-Lovers-simulator.ipa
+
+      # 8. 上传构建产物
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SLC-Lovers-iOS-IPA
+          path: iOS/SLC-Lovers-simulator.ipa
+          retention-days: 30
+
+      # 9. 同时上传 .app（备用）
+      - name: Upload APP bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: SLC-Lovers-iOS-APP
+          path: iOS/build/Build/Products/Release-iphonesimulator/SLC-Lovers.app
+          retention-days: 30
+
+      # 10. 构建总结
+      - name: Build summary
+        run: |
+          echo "## 🎉 iOS 构建完成" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**产物**：" >> $GITHUB_STEP_SUMMARY
+          echo "- \`SLC-Lovers-simulator.ipa\` - 模拟器版本（可直接拖入模拟器运行）" >> $GITHUB_STEP_SUMMARY
+          echo "- \`SLC-Lovers.app\` - APP 包（备用）" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**安装到真机的方法**：" >> $GITHUB_STEP_SUMMARY
+          echo "1. 下载 IPA 文件" >> $GITHUB_STEP_SUMMARY
+          echo "2. 用 AltStore 或 Sideloadly 签名安装" >> $GITHUB_STEP_SUMMARY
+          echo "3. 详见 docs/IOS-BUILD-GUIDE.md" >> $GITHUB_STEP_SUMMARY

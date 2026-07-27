@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+    </dict>
+    <key>UILaunchScreen</key>
+    <dict>
+        <key>UIColorName</key>
+        <string></string>
+        <key>UIImageName</key>
+        <string></string>
+    </dict>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>SLC-Lovers 需要位置权限来显示你与 TA 的距离，让你们更近一点。</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>SLC-Lovers 需要相册权限来上传你们的共同回忆。</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>SLC-Lovers 需要保存权限来存储你们的珍贵瞬间。</string>
+    <key>NSCameraUsageDescription</key>
+    <string>SLC-Lovers 需要相机权限来记录你们的日常。</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>SLC-Lovers 需要麦克风权限来发送语音消息。</string>
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>SLC-Lovers 需要通知权限来提醒你们重要的纪念日。</string>
+</dict>
+</plist>
