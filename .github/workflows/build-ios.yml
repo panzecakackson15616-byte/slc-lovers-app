@@ -14,11 +14,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Install XcodeGen
         run: brew install xcodegen
+
       - name: Generate Xcode project
         working-directory: iOS
         run: xcodegen
+
+      # ⭐ 关键修复：用 sed 强制把项目格式降级到 Xcode 14 兼容
+      - name: Patch project format for Xcode 15.4
+        working-directory: iOS
+        run: |
+          FILE=SLC-Lovers.xcodeproj/project.pbxproj
+          sed -i.bak 's/objectVersion = 77/objectVersion = 56/g' "$FILE"
+          rm -f "$FILE.bak"
+          echo "Patched: objectVersion → 56"
+          grep "objectVersion" "$FILE"
+
       - name: Build for iOS Simulator
         working-directory: iOS
         run: |
@@ -33,6 +46,7 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             clean build
+
       - name: Package as IPA
         working-directory: iOS
         run: |
@@ -41,6 +55,7 @@ jobs:
           mkdir -p Payload
           cp -R "$APP_PATH" Payload/
           zip -r SLC-Lovers-simulator.ipa Payload
+
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
