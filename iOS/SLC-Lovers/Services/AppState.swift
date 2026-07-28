@@ -29,16 +29,16 @@ final class AppState: ObservableObject {
     @Published var todayQuote: Quote?
 
     // MARK: - Stores
-    private let messagesStore = LocalStore<[Message]>(key: "messages")
-    private let photosStore = LocalStore<[Photo]>(key: "photos")
-    private let diaryStore = LocalStore<[DiaryEntry]>(key: "diary")
-    private let todoStore = LocalStore<[TodoItem]>(key: "todos")
-    private let bucketStore = LocalStore<[BucketItem]>(key: "buckets")
-    private let anniversaryStore = LocalStore<[Anniversary]>(key: "anniversaries")
-    private let locationStore = LocalStore<[LocationRecord]>(key: "locations")
-    private let capsuleStore = LocalStore<[TimeCapsule]>(key: "capsules")
-    private let noteStore = LocalStore<[StickyNote]>(key: "notes")
-    private let hobbyStore = LocalStore<[Hobby]>(key: "hobbies")
+    let messagesStore = LocalStore<[Message]>(key: "messages")
+    let photosStore = LocalStore<[Photo]>(key: "photos")
+    let diaryStore = LocalStore<[DiaryEntry]>(key: "diary")
+    let todoStore = LocalStore<[TodoItem]>(key: "todos")
+    let bucketStore = LocalStore<[BucketItem]>(key: "buckets")
+    let anniversaryStore = LocalStore<[Anniversary]>(key: "anniversaries")
+    let locationStore = LocalStore<[LocationRecord]>(key: "locations")
+    let capsuleStore = LocalStore<[TimeCapsule]>(key: "capsules")
+    let noteStore = LocalStore<[StickyNote]>(key: "notes")
+    let hobbyStore = LocalStore<[Hobby]>(key: "hobbies")
 
     // MARK: - 初始化
     private init() {
