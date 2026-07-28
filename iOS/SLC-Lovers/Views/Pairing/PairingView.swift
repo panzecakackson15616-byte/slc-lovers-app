@@ -398,7 +398,12 @@ private struct SuccessStep: View {
 extension AppState {
     @MainActor
     var tempRole: UserRole? {
-        get { Prefs.get(Prefs.Key.currentUserId + ".role") }
+        get {
+            if let raw: String = Prefs.get(Prefs.Key.currentUserId + ".role") {
+                return UserRole(rawValue: raw)
+            }
+            return nil
+        }
         set {
             if let role = newValue {
                 Prefs.set(role.rawValue, forKey: Prefs.Key.currentUserId + ".role")
