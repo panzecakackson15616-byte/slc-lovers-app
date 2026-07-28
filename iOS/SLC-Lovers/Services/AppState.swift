@@ -119,9 +119,16 @@ final class AppState: ObservableObject {
         stickyNotes = []
         hobbies = []
 
-        [messagesStore, photosStore, diaryStore, todoStore, bucketStore,
-         anniversaryStore, locationStore, capsuleStore, noteStore, hobbyStore]
-            .forEach { $0.clear() }
+        messagesStore.clear()
+        photosStore.clear()
+        diaryStore.clear()
+        todoStore.clear()
+        bucketStore.clear()
+        anniversaryStore.clear()
+        locationStore.clear()
+        capsuleStore.clear()
+        noteStore.clear()
+        hobbyStore.clear()
 
         Prefs.remove(Prefs.Key.currentUserId)
         Prefs.remove(Prefs.Key.partnerUserId)
@@ -144,13 +151,13 @@ final class AppState: ObservableObject {
         hobbies = hobbyStore.load() ?? []
 
         // 恢复当前用户
-        if let userIdStr = Prefs.get(Prefs.Key.currentUserId),
+        if let userIdStr: String = Prefs.get(Prefs.Key.currentUserId),
            let userId = UUID(uuidString: userIdStr) {
             // 原型中简单处理：用户名从 UserDefaults 拿不到，从 messages 等推断
             // 这里仅做占位
         }
         // 恢复纪念日（首次启动创建"在一起"纪念日）
-        if anniversaries.isEmpty, let _ = Prefs.get(Prefs.Key.startDate) {
+        if anniversaries.isEmpty, let _: Date = Prefs.get(Prefs.Key.startDate) {
             saveAnniversaries()
         }
     }
