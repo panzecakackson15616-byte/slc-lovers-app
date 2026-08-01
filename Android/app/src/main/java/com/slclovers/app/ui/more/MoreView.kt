@@ -130,7 +130,6 @@ fun MoreView(
                     color = SLCColor.Info,
                     onClick = { onNavigate("sync") },
                 )
-                )
                 MoreMenuItem(
                     icon = Icons.Default.CalendarMonth,
                     title = "纪念日管理",
