@@ -32,7 +32,7 @@ jobs:
           echo "Patched: objectVersion → 56"
           grep "objectVersion" "$FILE"
 
-      - name: Build for iOS Simulator
+      - name: Build for iOS Device
         working-directory: iOS
         run: |
           set -e
@@ -40,7 +40,8 @@ jobs:
             -project SLC-Lovers.xcodeproj \
             -scheme SLC-Lovers \
             -configuration Release \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination 'generic/platform=iOS' \
+            -arch arm64 \
             -derivedDataPath ./build \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
@@ -54,11 +55,10 @@ jobs:
           APP_PATH=$(find ./build -name "SLC-Lovers.app" -type d | head -1)
           mkdir -p Payload
           cp -R "$APP_PATH" Payload/
-          zip -r SLC-Lovers-simulator.ipa Payload
-
+          zip  -r SLC-Lovers.ipa Payload
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: SLC-Lovers-iOS-IPA
-          path: iOS/SLC-Lovers-simulator.ipa
+          path: iOS/SLC-Lovers.ipa
           retention-days: 30
