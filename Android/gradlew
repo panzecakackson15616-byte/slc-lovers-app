@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Gradle start up script for POSIX
+# Minimal wrapper launcher: delegates to org.gradle.wrapper.GradleWrapperMain,
+# which reads gradle/wrapper/gradle-wrapper.properties and downloads the
+# pinned Gradle distribution (8.5) before running the requested tasks.
+#
+
+set -e
+
+APP_HOME=$(cd "$(dirname "$0")" > /dev/null && pwd -P)
+CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
+
+if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
+    JAVACMD="$JAVA_HOME/bin/java"
+elif command -v java > /dev/null 2>&1; then
+    JAVACMD="java"
+else
+    echo "ERROR: JAVA_HOME is not set and no java command could be found." >&2
+    exit 1
+fi
+
+exec "$JAVACMD" $JAVA_OPTS $GRADLE_OPTS     -Dorg.gradle.appname=gradlew     -classpath "$CLASSPATH"     org.gradle.wrapper.GradleWrapperMain "$@"
