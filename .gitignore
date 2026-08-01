@@ -56,9 +56,10 @@ npm-debug.log*
 # 测试脚本（含 Token，不要提交）
 test-github-token.py
 
-# 加密同步数据
+# 加密同步数据（仅限仓库根目录的 data 目录，
+# 不能写成 data/ —— 那会连同源码包 app/.../slclovers/app/data/ 一起忽略）
 *.enc
-data/
+/data/
 
 # 构建产物与临时目录
 _temp/
