@@ -113,7 +113,7 @@ private fun DistanceCard(distance: Double) {
                 LocationUtils.formattedDistance(distance),
                 style = MaterialTheme.typography.displayLarge.copy(
                     fontSize = 56.sp,
-                    fontWeight = FontWeight.UltraLight,
+                    fontWeight = FontWeight.ExtraLight,
                 ),
                 color = SLCColor.Him,
             )

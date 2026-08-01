@@ -116,7 +116,7 @@ private fun CapsuleCard(capsule: TimeCapsuleEntity, onClick: () -> Unit) {
         Column(verticalArrangement = Arrangement.spacedBy(SLCSpace.sm)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    if (capsule.canUnlock()) Icons.Default.EmailOpen else Icons.Default.Email,
+                    if (capsule.canUnlock()) Icons.Default.MarkEmailRead else Icons.Default.Email,
                     contentDescription = null,
                     tint = if (capsule.canUnlock()) SLCColor.HerDeep else SLCColor.Him,
                     modifier = Modifier.size(28.dp),

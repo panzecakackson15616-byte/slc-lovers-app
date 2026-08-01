@@ -181,7 +181,7 @@ private fun TogetherCounter(startDate: Long, now: Long) {
                     DateUtils.togetherDays(startDate),
                     style = MaterialTheme.typography.displayLarge.copy(
                         fontSize = 96.sp,
-                        fontWeight = FontWeight.UltraLight,
+                        fontWeight = FontWeight.ExtraLight,
                     ),
                     color = SLCColor.Him,
                 )

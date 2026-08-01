@@ -2,6 +2,7 @@ package com.slclovers.app
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import java.util.Calendar
 import androidx.lifecycle.viewModelScope
 import com.slclovers.app.data.model.AnniversaryEntity
 import com.slclovers.app.data.model.BucketItemEntity
@@ -119,7 +120,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val partner = pairing.value?.partnerId ?: return
         viewModelScope.launch {
             repository.sendMessage(user.id, partner, content)
-            syncManager.schedulePushAll(this)
         }
         syncManager.schedulePushAll(this)
     }

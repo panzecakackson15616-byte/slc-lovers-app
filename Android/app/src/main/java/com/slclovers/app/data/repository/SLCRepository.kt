@@ -7,6 +7,7 @@ import com.slclovers.app.data.model.AnniversaryEntity
 import com.slclovers.app.data.model.BucketItemEntity
 import com.slclovers.app.data.model.DiaryEntryEntity
 import com.slclovers.app.data.model.HobbyEntity
+import com.slclovers.app.data.model.LocationEntity
 import com.slclovers.app.data.model.MessageEntity
 import com.slclovers.app.data.model.MessageType
 import com.slclovers.app.data.model.Mood
@@ -35,7 +36,10 @@ class SLCRepository(private val db: SLCDatabase) {
 
     // ============ 用户 & 配对 ============
 
-    suspend fun getCurrentUser(): UserEntity? = db.userDao().getById(getCurrentUserId() ?: return null)
+    suspend fun getCurrentUser(): UserEntity? {
+        val id = getCurrentUserId() ?: return null
+        return db.userDao().getById(id)
+    }
     fun observeCurrentUser(): Flow<UserEntity?> = db.userDao().observeCurrent()
     fun observePairing(): Flow<PairingEntity?> = db.pairingDao().observeCurrent()
     suspend fun getPairing(): PairingEntity? = db.pairingDao().getCurrent()
